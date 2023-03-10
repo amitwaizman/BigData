@@ -3,7 +3,7 @@
 //*********************//
 //   Create & Send    //
 //*******************//
-const create = require('../modles/data.js');
+const create = require('../Model/data.js');
 var Kafka = require('node-rdkafka');
 
 
