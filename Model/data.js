@@ -1,4 +1,4 @@
-const _fetch = require('../controller/fetchingData.js')
+const _fetch = require('../Controller/fetchingData.js')
 
 
 //   Arrays   //
