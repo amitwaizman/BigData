@@ -177,8 +177,13 @@ var Details_Orders = {
     Toppings:Toppings
 }
 
-j=[1,2];
-console.log(j.length)
+// j=[1,{}];
+// j[1][1]="4"
+// j[1][2]="5"
+// console.log(j[1][2])
+// delete j[1][2]
+// console.log(j[1][2])
+
 
 module.exports= {Details_Branch, Details_Orders}
 
