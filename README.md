@@ -1,7 +1,6 @@
 # BigData
 
-In this project we will design a system that feeds on many commercial transactions and allows them to have no status.
-NRT , both search and search, and pattern detection using machine learning.
+In this project we will design a system that feeds on large-scale commercial transactions, stores them and enables NRT status monitoring, investigation and search and pattern recognition using machine learning.
 
 ### Purpose:
 Design and implementation of a big data analytics system harnessing NoSQL database infrastructures, tools from Ecosystem Hadoop
