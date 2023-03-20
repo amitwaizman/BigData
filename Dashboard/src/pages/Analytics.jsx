@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import axios from 'axios';
+
 
 const Table = ({ tableData }) => {
   const tableRows = Object.keys(tableData).map((key) => (
@@ -44,9 +46,8 @@ const Analytics = () => {
  const handleSearch = async () => {
   const isoDate1 = new Date(selectedDate1).toISOString();
   const isoDate2 = new Date(selectedDate2).toISOString();
-  const response = await fetch(`https://localhost/bigml/getbydates?startdate=${isoDate1}&enddate=${isoDate2}`);
-  const data = await response.json();
-  setTableData(data);
+  const response = (await axios.get(`http://localhost:3001/getdatafrombigml?startdate=${isoDate1}&enddate=${isoDate2}`)).data;
+  setTableData(response);
 };
 
   return (

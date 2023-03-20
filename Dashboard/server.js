@@ -1,15 +1,17 @@
 const redis = require('redis');
 const express = require('express');
 const cors = require('cors')
+const axios = require('axios');
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+
+// const corsOptions = {
+//   origin: 'http://localhost:3002',
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 
 // Create a Redis client
@@ -101,6 +103,18 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
   
   res.send(result);
   console.log(result)
+})
+
+const bigMlURL = "http://localhost:3000/bigml/getbydates"
+
+app.get('/getdatafrombigml', async (req, res) => {
+  const startdate = req.query.startdate;
+  const enddate = req.query.enddate;
+
+  const result = (await axios.get(`${bigMlURL}?startdate=${startdate}&enddate=${enddate}`)).data
+  console.log(result)
+
+  res.send(result);
 })
 
 const server = express()

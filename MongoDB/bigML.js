@@ -1,4 +1,5 @@
 const bigml = require('bigml');
+const fetch = require("node-fetch");
 
 process.env.BIGML_USERNAME = 'ilan1il1000';
 process.env.BIGML_API_KEY = 'c873501d60fe9e2981301d10a3895cf351165ad8';
