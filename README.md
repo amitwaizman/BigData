@@ -21,10 +21,10 @@ Pizza order producer processing, including order time, at which branch and what 
   Will receive messages and distribute them to the Search Elastic search engine (in a Docker container) to the establishment MongoDB data (in the cloud)
 
 #### js.Node based server (local)
-  Will use the following databases:
+  Will use the following databases:<br />
 o MongoDB (in the cloud): retrieving data for the purpose of training a relational model using a cloud service. BigML,AWS or any other suitable service.<br />
-o Elasticsearch (in a Docker container): (searching order data in a date range.
-o Redis (in a Docker container) saving the status of central data as of this moment and displayed in the dashboard
+o Elasticsearch (in a Docker container): (searching order data in a date range.<br />
+o Redis (in a Docker container) saving the status of central data as of this moment and displayed in the dashboard.<br />
 
 ### Redis
 Saves the status of all the data displayed on the dashboard and updates using the WS protocol.
