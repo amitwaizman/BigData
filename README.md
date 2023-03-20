@@ -7,12 +7,12 @@ NRT , both search and search, and pattern detection using machine learning.
 Design and implementation of a big data analytics system harnessing NoSQL database infrastructures, tools from Ecosystem Hadoop
 and a guided concept of services (local and cloud-based) using a typical architectural template for a hybrid cloud computing environment.
 
-• The system will receive pizza order transactions from a chain with dozens of branches.__
-• The system will receive a message about the opening and closing of a branch.__
-• Order transaction data shall include at least the following data__
-• The system will display the following up-to-date data via a dashboard__
-• The system will allow a search in order data for the branch on a certain date__
-• The system will allow finding relationship rules between the types of additions from date range data.__
+• The system will receive pizza order transactions from a chain with dozens of branches.<br />
+• The system will receive a message about the opening and closing of a branch.<br />
+• Order transaction data shall include at least the following data.<br />
+• The system will display the following up-to-date data via a dashboard.<br />
+• The system will allow a search in order data for the branch on a certain date.<br />
+• The system will allow finding relationship rules between the types of additions from date range data.<br />
 
 #### The simulator
   Pizza order producer processing, including order time, at which branch and what toppings were requested. After a random time interval the simulator will report that the order is complete.
