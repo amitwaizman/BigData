@@ -27,7 +27,7 @@ o MongoDB (in the cloud) retrieving data for the purpose of training a relationa
 o Elasticsearch (in a Docker container) searching order data in a date range.<br />
 o Redis (in a Docker container) saving the status of central data as of this moment and displayed in the dashboard.<br />
 
-### Redis
+#### Redis
 Saves the status of all the data displayed on the dashboard and updates using the WS protocol.
 
 #### js.Node based server (local)
