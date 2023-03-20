@@ -30,9 +30,18 @@ const Table = ({ tableData }) => {
 const Analytics = () => {
   const [selectedDate1, setSelectedDate1] = useState('');
   const [selectedDate2, setSelectedDate2] = useState('');
-  const [tableData, setTableData] = useState({});
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [tableData, setTableData] = useState({
+    '0': {
+      Antecedent: '',
+      Consequent: '',
+      'Support (%)': '',
+      'Confidence (%)': ''
+    }
+  });
 
   const handleDateChange1 = (event) => {
+
     setSelectedDate1(event.target.value);
   };
 
@@ -41,20 +50,29 @@ const Analytics = () => {
     selectedDate.setHours(23, 59, 59, 999); // Set the time to the end of the day
     setSelectedDate2(selectedDate.toISOString());
   };
-  
 
- const handleSearch = async () => {
-  const isoDate1 = new Date(selectedDate1).toISOString();
-  const isoDate2 = new Date(selectedDate2).toISOString();
-  const response = (await axios.get(`http://localhost:3001/getdatafrombigml?startdate=${isoDate1}&enddate=${isoDate2}`)).data;
-  setTableData(response);
-};
+
+  const handleSearch = async (event) => {
+    setTableData({'0': {
+      Antecedent: 'Loading',
+      Consequent: 'Loading',
+      'Support (%)': 'Loading',
+      'Confidence (%)': 'Loading'
+    }})
+    setIsDisabled(true);
+    const isoDate1 = new Date(selectedDate1).toISOString();
+    const isoDate2 = new Date(selectedDate2).toISOString();
+    const response = (await axios.get(`http://localhost:3001/getdatafrombigml?startdate=${isoDate1}&enddate=${isoDate2}`)).data;
+    setTableData(response);
+    setIsDisabled(false);
+  };
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
       <h1>מציאת חוקי קשר</h1>
       <div className="cardSearch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '30px' }}>
-        <button onClick={handleSearch} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px', backgroundColor: 'white', color: 'black', border: 'none', borderRadius: '5px', padding: '5px 10px' }}>
+        <button disabled={isDisabled} onClick={handleSearch} 
+         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px', backgroundColor: 'white', color: 'black', border: 'none', borderRadius: '5px', padding: '5px 10px' }}>
           <FaSearch style={{ marginRight: '5px' }} />
           צור מודל
         </button>
@@ -71,7 +89,7 @@ const Analytics = () => {
 
       </div>
       <div className="cardSearch">
-        <Table tableData={tableData}/>
+        <Table tableData={tableData} />
       </div>
     </div>
   );

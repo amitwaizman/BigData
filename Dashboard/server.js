@@ -108,10 +108,40 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
 const bigMlURL = "http://localhost:3000/bigml/getbydates"
 
 app.get('/getdatafrombigml', async (req, res) => {
+  console.log("got new request for bigml data")
   const startdate = req.query.startdate;
   const enddate = req.query.enddate;
 
   const result = (await axios.get(`${bigMlURL}?startdate=${startdate}&enddate=${enddate}`)).data
+  console.log(result)
+
+  res.send(result);
+})
+
+app.get('/getdatafromelastic', async (req, res) => {
+  console.log("got new request for elastic data")
+  const date = req.query.date;
+  const branch = req.query.branch;
+/*
+  Gilad add your query
+
+  example of data you need to send:
+  {
+    "1": {
+      'Hour': 'Loading',
+      'Time to handle': 'Loading',
+      'Amount': 'Loading',
+      'Olives': 'Loading',
+      'Mushrooms': 'Loading',
+      'Bulgarian' :'Loading',
+      'Onion': 'Loading',
+      'Tomato':'Loading',
+      'corn':'Loading',
+      'eggplant':'Loading',
+      'pepper': 'Loading'
+    }
+  }
+*/
   console.log(result)
 
   res.send(result);

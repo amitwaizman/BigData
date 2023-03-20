@@ -4,23 +4,6 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/redis-data';
 
-const data = {
-    row1: {
-        col1: "value1",
-        col2: "value2",
-        col3: "value3",
-        col4: "value1",
-        col5: "value2",
-    },
-    row2: {
-        col1: "value1",
-        col2: "value2",
-        col3: "value3",
-        col4: "value1",
-        col5: "value2",
-    }
-};
-
 const Table = ({ data }) => {
     const tableRows = Object.keys(data).map((key) => (
         <tr key={key} >
@@ -48,7 +31,22 @@ const Table = ({ data }) => {
 const Search = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedBranch, setSelectedBranch] = useState("");
-    const [tableData, setTableData] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [tableData, setTableData] = useState({
+        "1": {
+            'Hour': '',
+            'Time to handle': '',
+            'Amount': '',
+            'Olives': '',
+            'Mushrooms': '',
+            'Bulgarian' :'',
+            'Onion': '',
+            'Tomato':'',
+            'corn':'',
+            'eggplant':'',
+            'pepper': ''
+        }
+    });
     const [apidata, setApiData] = useState({});
 
     const handleDateChange = (event) => {
@@ -60,9 +58,25 @@ const Search = () => {
     };
 
     const handleSearch = async () => {
-        const response = await fetch(`https://api.example.com/data?date=${selectedDate}&branch=${selectedBranch}`);
-        const data = await response.json();
-        setTableData(data);
+        setTableData({
+            "1": {
+                'Hour': 'Loading',
+                'Time to handle': 'Loading',
+                'Amount': 'Loading',
+                'Olives': 'Loading',
+                'Mushrooms': 'Loading',
+                'Bulgarian' :'Loading',
+                'Onion': 'Loading',
+                'Tomato':'Loading',
+                'corn':'Loading',
+                'eggplant':'Loading',
+                'pepper': 'Loading'
+            }
+        });
+        setIsDisabled(true);
+        const response = await axios.get(`https://localhost:3001/data?date=${selectedDate}&branch=${selectedBranch}`);
+        setTableData(response);
+        setIsDisabled(false);
     };
 
     useEffect(() => {
@@ -86,7 +100,7 @@ const Search = () => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
             <h1>נתוני הזמנות לסניף בתאריך מסוים</h1>
             <div className="cardSearch" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '30px' }}>
-                <button onClick={handleSearch} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px', backgroundColor: 'white', color: 'black', border: 'none', borderRadius: '5px', padding: '5px 10px' }}>
+                <button disabled={isDisabled} onClick={handleSearch} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10px', backgroundColor: 'white', color: 'black', border: 'none', borderRadius: '5px', padding: '5px 10px' }}>
                     <FaSearch style={{ marginRight: '5px' }} />חפש
                 </button>
 
@@ -108,7 +122,7 @@ const Search = () => {
 
             </div>
             <div className="cardSearch">
-                <Table data={data} />
+                <Table data={tableData} />
             </div>
         </div>
     );
