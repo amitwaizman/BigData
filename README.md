@@ -24,7 +24,7 @@ Pizza order producer processing, including order time, at which branch and what 
   Will use the following databases:<br />
 o MongoDB (in the cloud) retrieving data for the purpose of training a relational model using a cloud service.<br />
   BigML,AWS or any other suitable service.<br />
-o Elasticsearch (in a Docker container): (searching order data in a date range.<br />
+o Elasticsearch (in a Docker container) searching order data in a date range.<br />
 o Redis (in a Docker container) saving the status of central data as of this moment and displayed in the dashboard.<br />
 
 ### Redis
