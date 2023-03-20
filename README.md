@@ -3,7 +3,7 @@
 In this project we will design a system that feeds on many commercial transactions and allows them to have no status.
 NRT , both search and search, and pattern detection using machine learning.
 
-# Purpose:
+#Purpose:
 Design and implementation of a big data analytics system harnessing NoSQL database infrastructures, tools from Ecosystem Hadoop
 and a guided concept of services (local and cloud-based) using a typical architectural template for a hybrid cloud computing environment.
 
