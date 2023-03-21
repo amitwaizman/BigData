@@ -1,3 +1,10 @@
+/*
+Written by: Ilan Sirisky
+In the code, we have an Express server with an API endpoint to query data from a MongoDB database and send it to a BigML API to
+generate association rules. The rules are retrieved from the BigML API and returned as a response to the client.
+The server listens on port 3000 and logs a message when it starts.
+*/
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const {getSales} = require('./readSales');

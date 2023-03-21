@@ -1,3 +1,11 @@
+/*
+Written by: Ilan Sirisky
+This code uses the BigML API to create an Association model, retrieve the model's URL, and then fetch the data from the retrieved URL.
+It also includes a function that processes the fetched data to return the associations between the items in the dataset.
+The code is designed to be exported as a module, with the functions getResourceURL, getData,
+and getAssociations available for use in other parts of the codebase.
+*/
+
 const bigml = require('bigml');
 const fetch = require("node-fetch");
 
@@ -13,13 +21,16 @@ const bigmlClient = new bigml.BigML(apiUsername, apiKey);
 
 const source = new bigml.Source(bigmlClient);
 
+
 async function getResourceURL() {
     return new Promise((resolve, reject) => {
+        // Create source
         source.create(sourcePath, (err, sourceInfo) => {
             if (err) {
                 console.log(err);
                 reject(err);
             } else {
+                // Create dataset
                 console.log("Source created")
                 const dataset = new bigml.Dataset(bigmlClient);
                 dataset.create(sourceInfo.resource, (err, datasetInfo) => {
@@ -27,6 +38,7 @@ async function getResourceURL() {
                         console.log(err);
                         reject(err);
                     } else {
+                        // Create model
                         console.log("Dataset created");
                         association = new bigml.Association(bigmlClient);
                         association.create(datasetInfo.resource, (err, associationInfo) => {
@@ -49,13 +61,14 @@ async function getResourceURL() {
     });
 }
 
-
+// fetch data from bigML using the resource url
 const getData = async function (url) {
     var data = await fetch(url)
     data = await data.json()
     return data
 }
 
+// get the associations from the data
 function getAssociations(data) {
     let items = data.associations.items
     let rules = data.associations.rules

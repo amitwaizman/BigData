@@ -1,3 +1,10 @@
+/*
+Written by: Ilan Sirisky
+This code connects to a MongoDB database using Mongoose and sets up a Kafka consumer to consume messages from a Kafka topic.
+It then parses each message and saves it to MongoDB if it meets a specific condition.
+The code also includes error handling and logging for both MongoDB and Kafka operations.
+*/
+
 const Kafka = require("node-rdkafka");
 const mongoose = require('mongoose');
 
@@ -11,12 +18,12 @@ mongoose.connect('mongodb+srv://BigData:BigDataProject23@bigdata.e88w7z4.mongodb
     console.error('MongoDB connection error:', err);
 });
 
-
+// Define the schema for the messages
 const MessageSchema = new mongoose.Schema({content: String});
-
+// Create the model for the messages
 const Message = mongoose.model('Message', MessageSchema, 'Sales');
 
-
+// Create a new Kafka consumer
 const consumer = new Kafka.KafkaConsumer({
     'bootstrap.servers': 'pkc-6ojv2.us-west4.gcp.confluent.cloud:9092',
     'security.protocol': 'SASL_SSL',
@@ -32,12 +39,12 @@ consumer.on("ready", () => {
     consumer.subscribe(["BigData1"]);
     consumer.consume();
 }).on("data", async (message) => {
-    // console.log("Consumed message", message);
+
     // Parse the message and save it to MongoDB
     const content = message.value.toString();
     const newMessage = new Message({content});
 
-    try {
+    try { 
         if (content.startsWith('{"2":')) {
             await newMessage.save();
             console.log(`Message saved to MongoDB: ${content}`);
