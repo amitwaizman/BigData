@@ -1,3 +1,10 @@
+/*
+Written by: Eldad Tsemach
+This code sets up a Kafka consumer and Redis client to consume messages from a Kafka topic named "BigData1".
+The messages are parsed into a dictionary and depending on the key in the dictionary, the data is sent to Redis with a specific key.
+Any errors with Kafka or Redis are logged.
+*/
+
 const redis = require('redis');
 const Kafka = require('node-rdkafka');
 
@@ -14,16 +21,7 @@ const consumer = new Kafka.KafkaConsumer({
     'group.id': 'node-group'
 }, { "auto.offset.reset": "earliest" });
 
-messages = [
-    '{"0":{\"Branch_Name\":\"Or Akiva\",\"Open/Close\":\"open\"}}',
-    '{"2":{"Branch_Name":"Ramat_Gan_the_city_center","Area":"Central","status":"in process","Date":"2023/3/16,20:50","Branch_Number":939529,"Topping":["pepper","Onion","Tomato","Bulgarian","corn"],"Number_Order":1678992665721}}',
-    '{"2":{"Branch_Name":"Kfar Kara","Area":"Sharon","status":"in process","Date":"2023/3/16,20:50","Branch_Number":86100,"Topping":["Tomato","corn","Mushrooms","Bulgarian","eggplant"],"Number_Order":1678992706267}}',
-    '{"0":{"Branch_Name":"Zichron_Yaakov","Open/Close":"close"}}',
-    '{"1":{"Branch_Name":"Kiryat_Ata","Number_Order":1678992731726,"status":"finish"}}',
-    '{"2":{"Branch_Name":"Maalot","Area":"North","status":"in process","Date":"2023/3/16,20:51","Branch_Number":682051,"Topping":["pepper","Bulgarian","Tomato","eggplant"],"Number_Order":1678992740190}}',
-    '{"1":{"Branch_Name":"Kiryat_Ata","Number_Order":1678992731726,"status":"finish"}}'
-]
-
+// Function to send data to Redis with a specified key
 function sendDataToRedis(key, val) {
     console.log(val)
     redisClient.set(key, val, function (err, reply) {
@@ -32,12 +30,10 @@ function sendDataToRedis(key, val) {
         } else {
             console.log('Message written to Redis:', reply);
         }
-    });
-
-    
+    }); 
 }
+// Connect to Kafka consumer and Redis client
 consumer.connect();
-
 redisClient.connect().then(
     consumer.on('ready', () => {
         console.log("Ready to consume!")
@@ -46,6 +42,7 @@ redisClient.connect().then(
     })
 )
 
+// Log any Kafka consumer events
 consumer.on('data', (message) => {
     message = message.value.toString()
     console.log("we got the following message - ", message);

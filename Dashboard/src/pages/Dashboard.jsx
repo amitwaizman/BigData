@@ -1,3 +1,17 @@
+/*
+Written by: Eldad Tsemach
+This code is a React component that uses various libraries such as Chart.js and axios to fetch and display data from an API.
+The component defines state variables for different data sets, fetches the data using axios, and updates the state variables
+accordingly using the useState hook. The useEffect hook is used to fetch data when the component mounts.
+
+The component also calculates various metrics based on the data, such as the number of open branches and open orders,
+the average handling time, the number of orders per area and hour, and the number of orders for the day.
+
+Finally, the component generates different charts using the fetched data and the calculated metrics,
+such as a pie chart for the number of orders per area, a bar chart for the top 5 order additions,
+and a line chart for the top 5 branches with the shortest handling time.
+*/
+
 import React, { useState, useEffect } from 'react';
 import { Pie, Bar, Line } from 'react-chartjs-2';
 import axios from 'axios';
@@ -11,12 +25,14 @@ Chart.register(...registerables); // Register the "arc" element
 const API_URL = 'http://localhost:3001';
 
 const Dashboard = () => {
+    // Define state variables
     const [data, setData] = useState({});
     const [top5Addings, setTop5Addings] = useState({});
     const [top5Handlers, setTop5Handlers] = useState({});
     const [avgHandleTime, setAvgHandleTime] = useState({});
     const [allOrdersOfToday, setAllOrdersOfToday] = useState({});
 
+    // Fetch data from API on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -42,6 +58,8 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
+    // Calculate various metrics based on data
+
     const branchCount = Object.keys(data).filter((key) => {
         return key.includes('Branch_') && data[key] == 'open';
     }).length;
@@ -49,7 +67,6 @@ const Dashboard = () => {
     const openOrdersCount = Object.keys(data).filter((key) => {
         return key.includes('Order_') && JSON.parse(data[key])["status"] == "in process"
     }).map(key => {
-        // console.log(`${key} = ${JSON.parse(data[key])["status"]}`)
     }).length
 
     const numberOfOrderToday = Object.keys(allOrdersOfToday).length

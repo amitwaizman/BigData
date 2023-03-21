@@ -1,9 +1,19 @@
+/*
+Written by: Eldad Tsemach
+The code is a React component for an analytics dashboard that allows users to search for relationships
+between data and display the results in a table. It uses Axios to make HTTP requests to an API and
+displays the resulting data in a table using the Table component. The date range for the search is
+selected through two date input fields and the search is executed through a button click event.
+*/
+
+// import necessary libraries
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 
-
+// Table component which displays data as a table
 const Table = ({ tableData }) => {
+  // Convert the object into table rows and columns
   const tableRows = Object.keys(tableData).map((key) => (
     <tr key={key}>
       {Object.keys(tableData[key]).map((innerKey) => (
@@ -13,6 +23,7 @@ const Table = ({ tableData }) => {
   ));
 
   return (
+    // Render the table
     <table className="table">
       <thead>
         <tr>
@@ -27,10 +38,12 @@ const Table = ({ tableData }) => {
   );
 };
 
+// Analytics component which displays the search form and the result table
 const Analytics = () => {
+  // Declare state variables
   const [selectedDate1, setSelectedDate1] = useState('');
   const [selectedDate2, setSelectedDate2] = useState('');
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false); // disables search button while searching
   const [tableData, setTableData] = useState({
     '0': {
       Antecedent: '',
@@ -40,18 +53,19 @@ const Analytics = () => {
     }
   });
 
+// Handle changes to the "from" date input field
   const handleDateChange1 = (event) => {
-
     setSelectedDate1(event.target.value);
   };
 
+// Handle changes to the "to" date input field
   const handleDateChange2 = (event) => {
     const selectedDate = new Date(event.target.value);
     selectedDate.setHours(23, 59, 59, 999); // Set the time to the end of the day
     setSelectedDate2(selectedDate.toISOString());
   };
 
-
+ // Handle the search button click event
   const handleSearch = async (event) => {
     setTableData({'0': {
       Antecedent: 'Loading',
@@ -59,10 +73,13 @@ const Analytics = () => {
       'Support (%)': 'Loading',
       'Confidence (%)': 'Loading'
     }})
-    setIsDisabled(true);
+    setIsDisabled(true); // Disable the search button while searching
+    // Call the API and get the response data
     const isoDate1 = new Date(selectedDate1).toISOString();
     const isoDate2 = new Date(selectedDate2).toISOString();
     const response = (await axios.get(`http://localhost:3001/getdatafrombigml?startdate=${isoDate1}&enddate=${isoDate2}`)).data;
+
+    // Update the table data with the response data and enable the search button
     setTableData(response);
     setIsDisabled(false);
   };

@@ -1,3 +1,11 @@
+/*
+Written by: Eldad Tsemach
+The code is a Node.js server that handles requests for different data sets from Redis and Elasticsearch databases.
+It also sends requests to an external API and returns the requested data in JSON format.
+The endpoints include getting Redis data, getting the top 5 addings, getting the top 5 fastest handlers,
+getting the average handle time, getting all orders from today, and getting data from an external API.
+*/
+
 const redis = require('redis');
 const express = require('express');
 const cors = require('cors')
@@ -26,6 +34,7 @@ client.on('error', (err) => {
   console.log('Redis client error:', err);
 });
 
+// The /redis-data endpoint gets data from the Redis client and sends it as a response.
 app.get('/redis-data', async (req, res) => {
   const keys = await client.keys('*')
 
@@ -52,6 +61,7 @@ app.get('/redis-data', async (req, res) => {
   // console.log(data)
 })
 
+// The /getTop5Addings endpoint sends a query to Elasticsearch and returns the top 5 most common terms in the "Topping" field of the documents.
 app.get('/getTop5Addings', async (req, res) => {
   //get http://localhost:9200/kafkat/_search
   const data = {
@@ -78,6 +88,7 @@ app.get('/getTop5Addings', async (req, res) => {
       res.send(myNewList);
 })
 
+// The /getTop5FastestHandlers endpoint sends a query to Elasticsearch and returns the 5 branches with the fastest handling time of orders.
 app.get('/getTop5FastestHandlers', async (req, res) => {
   const query = {
         "size": 0,
@@ -116,11 +127,11 @@ app.get('/getTop5FastestHandlers', async (req, res) => {
   res.send(myNewList);
 })
 
+// The /getAvarageHandleTime endpoint sends a query to Elasticsearch and returns the average handle time of all orders.
 app.get('/getAvarageHandleTime', async (req, res) => {
   
   // const finished = await getHitsFromElastic('1', {"size": 10000});
   // const started = await getHitsFromElastic('2', {"size": 10000});
-  //TODO
   const query = {
     "size": 0,
     "query": {
@@ -140,6 +151,7 @@ app.get('/getAvarageHandleTime', async (req, res) => {
   res.send(data);
 })
 
+// The /getAllOrdersFromToday endpoint gets data from Redis and Elasticsearch and returns all orders from today.
 app.get('/getAllOrdersFromToday', async (req, res) => {
   const keys = await client.keys('*')
 
@@ -147,7 +159,7 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
     res.send([]);
     return;
   }
-  //GILAD
+
   let {startTime, endTime} = dateToEpoch();
   const query = {
     "size": 10000,
@@ -181,8 +193,8 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
   // console.log(result)
 })
 
+// The /getdatafrombigml endpoint gets data from a BigML API and sends it as a response.
 const bigMlURL = "http://localhost:3000/bigml/getbydates"
-
 app.get('/getdatafrombigml', async (req, res) => {
   console.log("got new request for bigml data")
   const startdate = req.query.startdate;
@@ -199,8 +211,6 @@ app.get('/getdatafromelastic', async (req, res) => {
   const date = req.query.date;
   const branch = req.query.branch;
 /*
-  Gilad add your query
-
   example of data you need to send:
   {
     "1": {

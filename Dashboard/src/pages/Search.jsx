@@ -1,9 +1,18 @@
+/*
+Written by: Eldad Tsemach
+The code above is a React component that creates a search functionality and displays data from an API in a table.
+It uses the useState and useEffect hooks from React to manage state and perform side effects, and axios to make HTTP requests.
+The Table component maps over the data received from the API to render a table, while the Search component
+handles user input for the search criteria, updates the table data accordingly, and fetches data from the API based on the search criteria.
+*/
+
 import React, { useState, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/redis-data';
 
+// This component takes in data as a prop and renders it in a table format with the header row and all other rows.
 const Table = ({ data }) => {
     const tableRows = Object.keys(data).map((key) => (
         <tr key={key} >
@@ -28,6 +37,7 @@ const Table = ({ data }) => {
     );
 };
 
+// This component is responsible for rendering the search bar and handling the search action, fetching data from an API and displaying it in the Table component.
 const Search = () => {
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedBranch, setSelectedBranch] = useState("");
@@ -49,14 +59,18 @@ const Search = () => {
     });
     const [apidata, setApiData] = useState({});
 
+    // This function is called when the date input value changes and updates the selectedDate state with the new value.
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
     };
 
+    // This function is called when the branch input value changes and updates the selectedBranch state with the new value.
     const handleBranchChange = (event) => {
         setSelectedBranch(event.target.value);
     };
 
+    // This function is called when the search button is clicked and makes an API call to fetch data based on the selected date and branch.
+    // It also updates the tableData state with the fetched data.
     const handleSearch = async () => {
         setTableData({
             "1": {
@@ -79,6 +93,7 @@ const Search = () => {
         setIsDisabled(false);
     };
 
+    // This hook is used to fetch data from an API when the component mounts and updates the apiData state with the fetched data.
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -92,6 +107,7 @@ const Search = () => {
         fetchData();
     }, []);
 
+    // This function filters out the branch names from the apiData state and returns an array of branch names.
     const branchNames = Array.from(Object.keys(apidata).filter((key) => {
         return key.includes('Branch_') && apidata[key] == 'open';
     }).map(key => key.substring(7)))
