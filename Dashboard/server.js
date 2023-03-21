@@ -9,6 +9,8 @@ const axios = require('axios');
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
 
+const {getDataFromElastic, getHitsFromElastic} = require('../Elastic/elasticuse')
+
 const app = express();
 
 app.use(cors());
@@ -51,32 +53,90 @@ app.get('/redis-data', async (req, res) => {
 })
 
 app.get('/getTop5Addings', async (req, res) => {
-  const data = [
-    { label: "Type 1", value: 100 },
-    { label: "Type 2", value: 80 },
-    { label: "Type 3", value: 50 },
-    { label: "Type 4", value: 40 },
-    { label: "Type 5", value: 30 },
-  ];
+  //get http://localhost:9200/kafkat/_search
+  const data = {
+    "size": 0,
+    "aggs": {
+      "top5_adds": {
+        "terms": {
+          "field": "Topping.keyword",
+          "size": 5
+        }
+      }
+    }
+  };
 
-  res.send(data);
+  const myList = (await getDataFromElastic('2', data)).aggregations.top5_adds.buckets;
+  const myNewList = myList.map(item => {
+        return {
+          label: item.key,
+          value: item.doc_count
+        }
+      });
+      
+      // console.log(myNewList);
+      res.send(myNewList);
 })
 
 app.get('/getTop5FastestHandlers', async (req, res) => {
-  const data = [
-    { label: "Type 1", value: 100 },
-    { label: "Type 2", value: 80 },
-    { label: "Type 3", value: 50 },
-    { label: "Type 4", value: 40 },
-    { label: "Type 5", value: 30 },
-  ];
-
-  res.send(data);
+  const query = {
+        "size": 0,
+        "query": {
+            "match_all": {}
+        },
+        "aggs": {
+            "order_ids": {
+                "terms": {
+                    "field": "Branch_Name.keyword",
+                    "order": {
+                        "min_time": "asc"
+                    },
+                    "size": 5
+                },
+                "aggs": {
+                    "min_time": {
+                        "min": {
+                            "field": "DateDif"
+                        }
+                    }
+                }
+            }
+        }
+      };
+  
+  const myList = (await getDataFromElastic('1', query)).aggregations.order_ids.buckets;
+  const myNewList = myList.map(item => {
+        return {
+          label: item.key,
+          value: item.min_time.value / 60000
+        }
+      });
+      
+  // console.log(myNewList);
+  res.send(myNewList);
 })
 
 app.get('/getAvarageHandleTime', async (req, res) => {
-  const data = {data: 15}
+  
+  // const finished = await getHitsFromElastic('1', {"size": 10000});
+  // const started = await getHitsFromElastic('2', {"size": 10000});
+  //TODO
+  const query = {
+    "size": 0,
+    "query": {
+        "match_all": {}
+    },
+    "aggs": {
+        "avg_date": {
+            "avg": {
+                "field": "DateDif"
+            }
+        }
+    }
+  };
 
+  const avg_wait = (await getDataFromElastic('1', query)).aggregations.avg_date.value;
+  const data = {data: Math.round(avg_wait / 600000)}
   res.send(data);
 })
 
@@ -87,13 +147,28 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
     res.send([]);
     return;
   }
+  //GILAD
+  let {startTime, endTime} = dateToEpoch();
+  const query = {
+    "size": 10000,
+    "query": {
+        "range": {
+            "Date": {
+                "gte": startTime,
+                "lt": endTime
+            }
+        }
+    }
+  };
 
-  const val = await client.mGet(keys)
+  const hits = await getHitsFromElastic('2', query);
 
   const data = {};
-  keys.forEach((key, index) => {
-    data[key] = val[index];
-  });
+  hits.forEach(item => {
+    let k = `Order_${item.Number_Order}`;
+    data[k] = JSON.stringify(item);
+  })
+
   const result = {}
   Object.keys(data)
   .filter(key => key.includes("Order_"))
@@ -101,8 +176,9 @@ app.get('/getAllOrdersFromToday', async (req, res) => {
     result[key] = data[key]
   })
   
+  
   res.send(result);
-  console.log(result)
+  // console.log(result)
 })
 
 const bigMlURL = "http://localhost:3000/bigml/getbydates"
@@ -152,3 +228,12 @@ const server = express()
   .listen(3001, () => {
     console.log(`Listening Socket on http://localhost:3001`)
   });
+
+  function dateToEpoch() {
+  let thedate = new Date();
+  const day = 86400000;
+  let time = thedate.getTime();
+  time = time - (time % day);
+  let end = time + day;
+  return { time , end };
+}

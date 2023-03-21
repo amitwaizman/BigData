@@ -1,0 +1,12 @@
+{
+    "name": "elastic",
+    "version": "1.0.0",
+    "description": "Example of adding a document to Elasticsearch using the @elastic/elasticsearch client library",
+    "main": "elastic.js",
+    "dependencies": {
+      "@elastic/elasticsearch": "^7",
+      "node-rdkafka": "^2.15.0",
+      "axios": "^1.3.4"
+    }
+}
+  

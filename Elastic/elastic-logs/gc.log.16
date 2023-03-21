@@ -1,0 +1,25 @@
+[2023-03-21T08:06:28.276+0000][173][gc,init] CardTable entry size: 512
+[2023-03-21T08:06:28.283+0000][173][gc     ] Using G1
+[2023-03-21T08:06:28.288+0000][173][gc,init] Version: 19.0.2+7-44 (release)
+[2023-03-21T08:06:28.288+0000][173][gc,init] CPUs: 4 total, 4 available
+[2023-03-21T08:06:28.288+0000][173][gc,init] Memory: 5791M
+[2023-03-21T08:06:28.288+0000][173][gc,init] Large Page Support: Disabled
+[2023-03-21T08:06:28.288+0000][173][gc,init] NUMA Support: Disabled
+[2023-03-21T08:06:28.288+0000][173][gc,init] Compressed Oops: Enabled (32-bit)
+[2023-03-21T08:06:28.288+0000][173][gc,init] Heap Region Size: 1M
+[2023-03-21T08:06:28.288+0000][173][gc,init] Heap Min Capacity: 512M
+[2023-03-21T08:06:28.288+0000][173][gc,init] Heap Initial Capacity: 512M
+[2023-03-21T08:06:28.288+0000][173][gc,init] Heap Max Capacity: 512M
+[2023-03-21T08:06:28.289+0000][173][gc,init] Pre-touch: Disabled
+[2023-03-21T08:06:28.289+0000][173][gc,init] Parallel Workers: 4
+[2023-03-21T08:06:28.289+0000][173][gc,init] Concurrent Workers: 1
+[2023-03-21T08:06:28.289+0000][173][gc,init] Concurrent Refinement Workers: 4
+[2023-03-21T08:06:28.289+0000][173][gc,init] Periodic GC: Disabled
+[2023-03-21T08:06:28.289+0000][173][gc,metaspace] CDS archive(s) not mapped
+[2023-03-21T08:06:28.289+0000][173][gc,metaspace] Compressed class space mapped at: 0x0000000100000000-0x0000000140000000, reserved size: 1073741824
+[2023-03-21T08:06:28.289+0000][173][gc,metaspace] Narrow klass base: 0x0000000000000000, Narrow klass shift: 3, Narrow klass range: 0x140000000
+[2023-03-21T08:06:28.362+0000][173][gc,heap,exit] Heap
+[2023-03-21T08:06:28.362+0000][173][gc,heap,exit]  garbage-first heap   total 524288K, used 2050K [0x00000000e0000000, 0x0000000100000000)
+[2023-03-21T08:06:28.362+0000][173][gc,heap,exit]   region size 1024K, 3 young (3072K), 0 survivors (0K)
+[2023-03-21T08:06:28.362+0000][173][gc,heap,exit]  Metaspace       used 3803K, committed 3840K, reserved 1114112K
+[2023-03-21T08:06:28.362+0000][173][gc,heap,exit]   class space    used 286K, committed 320K, reserved 1048576K
