@@ -1,10 +1,12 @@
 const _fetch = require('../Controller/fetchingData.js')
 
+
+//Amit Waizman
 // 0-> open/close
 // 1->number order finish
 // 2->order
 
-// Arrays   //
+
 
 exports.DBranches = function DBranchs() {
     return _fetch.Details_Branch
@@ -12,20 +14,25 @@ exports.DBranches = function DBranchs() {
 exports.DOrders = function DOrders() {
     return _fetch.Details_Orders
 }
+dict = _fetch.Details_Branch.dict
 
+
+//This function returns the date
 function today() {
     date = new Date().setHours(Math.floor(Math.random() * 24), 0, 0, 0);
     return date;
 }
 
-dict = _fetch.Details_Branch.dict
+
+
+
+//The function returns a JSON object containing the name of the branch and whether it is open or closed.
 exports.open_close = function open_close(ArraysBranch) { /* Random Branchs */
     let randomBranch
     let Branchs_size = Object.keys(ArraysBranch).length;
     let i = Math.floor(Math.random() * Branchs_size);
     var _Branch = ArraysBranch[i];
     const randomNumber = Math.floor(Math.random() * 24);
-    console.log(randomNumber);
     if (randomNumber >= 0 && randomNumber <= 3 && dict[_Branch[0]].length < 2) {
         dict[_Branch[0]][0] = "close";
     } else {
@@ -46,6 +53,11 @@ exports.open_close = function open_close(ArraysBranch) { /* Random Branchs */
     return JSON.stringify(result)
 }
 
+    //**********************************************************************************************************//
+   //The Orders function randomly selects a branch, checks if it is open or closed,                            //
+  // if the branch is open it generates a random order with additions,assigns an order number, status, etc..  // 
+ //and returns the order details in JSON format.                                                             //
+//**********************************************************************************************************//
 
 exports.Orders = function Orders(ArraysBranch, ArraysNumBranch, ArraysArea, ArraysTopping) { /* Random Branchs */
     let randomOrders;
@@ -56,7 +68,6 @@ exports.Orders = function Orders(ArraysBranch, ArraysNumBranch, ArraysArea, Arra
     var _Area = ArraysArea[_Branch[1]];
     if (dict[_Branch[0]][0] != "open" || dict[_Branch[0]][0] != "close") {
         const randomNumber = Math.floor(Math.random() * 24);
-        // console.log(randomNumber);
         if (randomNumber >= 0 && randomNumber <= 3) {
             dict[_Branch[0]][0] = {
                 0: "close"
@@ -109,7 +120,7 @@ exports.Orders = function Orders(ArraysBranch, ArraysNumBranch, ArraysArea, Arra
         }
 
         var date = today();
-        function status() {
+        function NumOrder() {
             var _NumOrder = _NumOrder = Date.now() + Math.trunc((Math.random() * 85684));
             dict[_Branch[0]].push({
                 1: [_NumOrder, "in process", date]
@@ -119,7 +130,7 @@ exports.Orders = function Orders(ArraysBranch, ArraysNumBranch, ArraysArea, Arra
         var _Top = Array.from(list_topping());
         result = {
             "2": {
-                "Branch_Name": _Branch[0], "Area": _Area, "status": "in process", "Date": date, "Branch_Number": _BranchNum, "Topping": _Top, "Number_Order": status()
+                "Branch_Name": _Branch[0], "Area": _Area, "status": "in process", "Date": date, "Branch_Number": _BranchNum, "Topping": _Top, "Number_Order": NumOrder()
             }
         };
         randomOrders = JSON.stringify(result)
@@ -134,7 +145,13 @@ exports.Orders = function Orders(ArraysBranch, ArraysNumBranch, ArraysArea, Arra
 }
 
 
-exports._sta = function _sta(ArraysBranch, ArraysArea) {
+   //**********************************************************************************************************************************//
+  //This is a function to retrieve the status of a random order from a random branch.                                                 //
+ //The function checks if there is at least one order in the selected branch before returning the status of an order as "finished".  //
+//The date and time of the order are also randomly adjusted before returning.                                                       //
+//*********************************************************************************************************************************//
+
+exports._statuse = function _statuse(ArraysBranch, ArraysArea) {
     let Branchs_size = Object.keys(ArraysBranch).length;
     let i = Math.floor(Math.random() * Branchs_size);
     var _Branch = ArraysBranch[i];

@@ -1,81 +1,94 @@
+   
+    //Amit Waizman
+   //***********************************************************************************************************************//
+  // This variable declaration defines an array that contains information about store branches in various cities in Israel.//
+ // Each sub-array within the array has two values,representing the city name and and Area.                               //                  //
+//***********************************************************************************************************************//
 
+//List of store branches+Area
 var map_Branches = [
-    ["Kiryat_Motzkin", 0],
-    ["Kiryat_Ata", 0],
-    ["Zichron_Yaakov", 0],
-    ["Ramat_Yishai", 0],
-    ["Haifa_Moriah", 0],
-    ["Haifa_a_German_colony", 0],
-    ["Haifa_Technion", 0],
-    ["Haifa", 0],
-    ["Acre", 0],
-    ["Nazareth", 0],
-    ["Beit_Shean", 0],
-    ["Nahariya", 0],
-    ["Tiberias", 0],
-    ["Yakneam", 0],
-    ["Yercha", 0],
-    ["Carmiel", 0],
-    ["Maalot", 0],
-    ["Eilat_Promenade", 1],
-    ["Eilat_the_Red_Mall", 1],
-    ["Ashkelon", 1],
-    ["Sheva_Beer_Avisror", 1],
-    ["Beer_heva_MALL", 1],
-    ["Kiryat_Gat", 1],
-    ["Dimona", 1],
-    ["Mitzpe_Ramonona", 1],
-    ["Be'er_Ya'akov", 2],
-    ["Gedera", 2],
-    ["Yavne", 2],
-    ["Ramle_Lod", 2],
-    ["Rosh_Haayin", 2],
-    ["Rehovot", 2],
-    ["Rehovot_Billo Center", 2],
-    ["Ness_Ziona", 2],
-    ["Modiin", 2],
-    ["Shoham", 2],
-    ["Rishon_LeZion_West", 3],
-    ["Rishon_LeZion_Mizrah",3],
-    ["Petah_Tikva_Sirkin", 3],
-    ["Petah_Tikva_Beilinson", 3],
-    ["Petah_Tikva_Kfar Ganim", 3],
-    ["Tel_Aviv_Ramat Aviv", 3],
-    ["Tel_Aviv_Hasmoneans", 3],
-    ["Tel_Aviv_Yad_Eliyahu", 3],
-    ["Ramat_Gan_the_city_center", 3],
-    ["Ramat_Gan_Marom_Neve", 3],
-    ["Yehud", 3],
-    ["Holon_East", 3],
-    ["West_Holon", 3],
-    ["Bneiֹ_Brak", 3],
-    ["Kfar Kara", 4],
-    ["Hadera", 4],
-    ["Or Akiva", 4],
-    ["Taiba", 4],
-    ["Kafr_Qasim", 4],
-    ["Kfar_Sava", 4],
-    ["Raanana", 4],
-    ["Hod_Hasharon", 4],
-    ["Netanya_city_center", 4],
-    ["Netanya_Poleg", 4],
-    ["Herzliya", 4],
-    ["Ramat_Hasharon", 4],
-    ["Jerusalem_Ramot", 5],
-    ["Jerusalem_Niyot", 5],
-    ["Jerusalem_Ben_Hillel", 5],
-    ["Jerusalem_Talpiot", 5],
-    ["Jerusalem_central_station", 5],
-    ["Jerusalem_Malcha", 5],
-    ["Jerusalem_BeiT_Hanina", 5],
-    ["Mevaseret_Zion", 5],
-    ["Jerusalem_Ben_Hillel", 5]
+  ["Kiryat_Motzkin", 0],
+  ["Kiryat_Ata", 0],
+  ["Zichron_Yaakov", 0],
+  ["Ramat_Yishai", 0],
+  ["Haifa_Moriah", 0],
+  ["Haifa_a_German_colony", 0],
+  ["Haifa_Technion", 0],
+  ["Haifa", 0],
+  ["Acre", 0],
+  ["Nazareth", 0],
+  ["Beit_Shean", 0],
+  ["Nahariya", 0],
+  ["Tiberias", 0],
+  ["Yakneam", 0],
+  ["Yercha", 0],
+  ["Carmiel", 0],
+  ["Maalot", 0],
+  ["Eilat_Promenade", 1],
+  ["Eilat_the_Red_Mall", 1],
+  ["Ashkelon", 1],
+  ["Sheva_Beer_Avisror", 1],
+  ["Beer_heva_MALL", 1],
+  ["Kiryat_Gat", 1],
+  ["Dimona", 1],
+  ["Mitzpe_Ramonona", 1],
+  ["Be'er_Ya'akov", 2],
+  ["Gedera", 2],
+  ["Yavne", 2],
+  ["Ramle_Lod", 2],
+  ["Rosh_Haayin", 2],
+  ["Rehovot", 2],
+  ["Rehovot_Billo Center", 2],
+  ["Ness_Ziona", 2],
+  ["Modiin", 2],
+  ["Shoham", 2],
+  ["Rishon_LeZion_West", 3],
+  ["Rishon_LeZion_Mizrah",3],
+  ["Petah_Tikva_Sirkin", 3],
+  ["Petah_Tikva_Beilinson", 3],
+  ["Petah_Tikva_Kfar Ganim", 3],
+  ["Tel_Aviv_Ramat Aviv", 3],
+  ["Tel_Aviv_Hasmoneans", 3],
+  ["Tel_Aviv_Yad_Eliyahu", 3],
+  ["Ramat_Gan_the_city_center", 3],
+  ["Ramat_Gan_Marom_Neve", 3],
+  ["Yehud", 3],
+  ["Holon_East", 3],
+  ["West_Holon", 3],
+  ["Bneiֹ_Brak", 3],
+  ["Kfar Kara", 4],
+  ["Hadera", 4],
+  ["Or Akiva", 4],
+  ["Taiba", 4],
+  ["Kafr_Qasim", 4],
+  ["Kfar_Sava", 4],
+  ["Raanana", 4],
+  ["Hod_Hasharon", 4],
+  ["Netanya_city_center", 4],
+  ["Netanya_Poleg", 4],
+  ["Herzliya", 4],
+  ["Ramat_Hasharon", 4],
+  ["Jerusalem_Ramot", 5],
+  ["Jerusalem_Niyot", 5],
+  ["Jerusalem_Ben_Hillel", 5],
+  ["Jerusalem_Talpiot", 5],
+  ["Jerusalem_central_station", 5],
+  ["Jerusalem_Malcha", 5],
+  ["Jerusalem_BeiT_Hanina", 5],
+  ["Mevaseret_Zion", 5],
+  ["Jerusalem_Ben_Hillel", 5]
 ];
 
+
+//List of Area
 var Area=["North","South","Lowland","Central","Sharon","Jerusalem"];
 
+
+//List of Toppings
 var Toppings =  ["Olives", "Mushrooms", "Bulgarian", "Onion", "Tomato","corn","eggplant","pepper"];
 
+
+//List of branch number
 var branch_number = [18139651592525, 806424026641103, 95800948021997, 254992619777344, 302129577241576,
 847099, 282129, 207870, 208770, 746420, 260712288378, 261005756989437, 808840,529549,
 711109,347591, 682051,040421,775249,753481,548771,080051,660810,743320,552299,
@@ -85,18 +98,19 @@ var branch_number = [18139651592525, 806424026641103, 95800948021997, 2549926197
 908569,361891,7048779,100121,783451];
 
 
-  /*
-  Details Branch:
-   -Branch Name
-   -Area Name
-   -Branch Number
-  */
-  
- var dict={"Kiryat_Motzkin":[] ,"Kiryat_Ata": [],
- "Zichron_Yaakov": [], "Ramat_Yishai":[], "Haifa_Moriah":[],
- "Haifa_a_German_colony":[],
- "Haifa_Technion":[],
- "Haifa":[],
+/*
+Details Branch:
+ -Branch Name
+ -Area Name
+ -Branch Number
+*/
+
+//A dictionary that contains the name of the branch and an empty array
+var dict={"Kiryat_Motzkin":[] ,"Kiryat_Ata": [],
+"Zichron_Yaakov": [], "Ramat_Yishai":[], "Haifa_Moriah":[],
+"Haifa_a_German_colony":[],
+"Haifa_Technion":[],
+"Haifa":[],
 "Acre":[],
 "Nazareth":[],
 "Beit_Shean":[],
@@ -161,30 +175,23 @@ var branch_number = [18139651592525, 806424026641103, 95800948021997, 2549926197
 "Jerusalem_Ben_Hillel":[]};
 
 var Details_Branch = {
-    BranchName:map_Branches,
-    AreaName:Area,
-    BranchNumber:branch_number,
-    dict:dict
+  BranchName:map_Branches,
+  AreaName:Area,
+  BranchNumber:branch_number,
+  dict:dict
 }
 
-  /*
-  Details Orders:
-   -Toppings
-  */
+/*
+Details Orders:
+ -Toppings
+*/
 
 
 var Details_Orders = {
-    Toppings:Toppings
+  Toppings:Toppings
 }
 
-// j=[1,{}];
-// j[1][1]="4"
-// j[1][2]="5"
-// console.log(j[1][2])
-// delete j[1][2]
-// console.log(j[1][2])
 
 
 module.exports= {Details_Branch, Details_Orders}
-
 

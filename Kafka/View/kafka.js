@@ -1,7 +1,8 @@
-// https://www.cloudkarafka.com/ הפעלת קפקא במסגרת ספק זה
+//Amit Waizman
+
 
 // *********************//
-// Create & Send    //
+// Create & Send       //
 // *******************//
 const create = require('../Model/main.js');
 var Kafka = require('node-rdkafka');
@@ -12,11 +13,24 @@ let sale2 = ""
 let sale3 = ""
 let BranchesD = create.DBranches()
 let OrdersD = create.DOrders()
+
+
+
+     //                              https://www.confluent.io                                                       // 
+    //*************************************************************************************************************//
+   //This class sends messages to the Kafka.                                                                      //
+  //It uses two separate setTimeout calls to perform different functions of sending messages every few seconds.  // 
+ //The code also defines a Kafka producer with the appropriate credentials to connect to the broker.            //
+//*************************************************************************************************************//
+
+
+
 k = 0;
 if (k < 20) {}
 setTimeout(send, 100)
-function send() {
 
+
+function send() {
     const producer = new Kafka.Producer({
         'metadata.broker.list': 'pkc-6ojv2.us-west4.gcp.confluent.cloud:9092',
         'security.protocol': 'SASL_SSL',
@@ -101,7 +115,7 @@ function send1() {
             setTimeout(ready, 1500)
         }
         function SendToKafka() {
-            sale3 = create._sta(BranchesD.BranchName, BranchesD.AreaName)
+            sale3 = create._statuse(BranchesD.BranchName, BranchesD.AreaName)
             if (sale3 != "empty") {
                 console.log(sale3)
                 genMessage3 = Buffer.from(sale3);
