@@ -6,6 +6,10 @@ The endpoints include getting Redis data, getting the top 5 addings, getting the
 getting the average handle time, getting all orders from today, and getting data from an external API.
 */
 
+/*
+Elastic queries: by Gilad Livshitz, we used here queries based on the tasks
+*/
+
 const redis = require('redis');
 const express = require('express');
 const cors = require('cors')
